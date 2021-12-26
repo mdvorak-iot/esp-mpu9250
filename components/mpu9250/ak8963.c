@@ -26,7 +26,9 @@
 static const char *TAG = "ak8963";
 
 static bool initialised = false;
+static uint8_t i2c_num = 0;
 static calibration_t *cal = NULL;
+vector_t asa = {};
 
 esp_err_t ak8963_init(i2c_port_t i2c_number, calibration_t *c)
 {
@@ -40,7 +42,7 @@ esp_err_t ak8963_init(i2c_port_t i2c_number, calibration_t *c)
   cal = c;
 
   // connection with magnetometer
-  uint8_t id;
+  uint8_t id = 0;
   ak8963_get_device_id(&id);
 
   if (id & AK8963_WHO_AM_I_RESPONSE)
@@ -60,7 +62,7 @@ esp_err_t ak8963_init(i2c_port_t i2c_number, calibration_t *c)
 
 esp_err_t ak8963_get_data_ready(bool *val)
 {
-  uint8_t bit;
+  uint8_t bit = 0;
   esp_err_t ret = i2c_read_bit(i2c_num, AK8963_ADDRESS, AK8963_ST1, AK8963_ST1_DRDY_BIT, &bit);
   if (ret != ESP_OK)
   {
@@ -79,7 +81,7 @@ esp_err_t ak8963_get_device_id(uint8_t *val)
 esp_err_t ak8963_get_sensitivity_adjustment_values()
 {
 
-  esp_err_t ret;
+  esp_err_t ret = ESP_OK;
 
   // Need to set to Fuse mode to get valid values from this.
   uint8_t current_mode;
@@ -117,8 +119,8 @@ esp_err_t ak8963_get_sensitivity_adjustment_values()
 esp_err_t ak8963_get_mag(vector_t *v)
 {
 
-  esp_err_t ret;
-  uint8_t bytes[6];
+  esp_err_t ret = ESP_OK;
+  uint8_t bytes[6] = {};
 
   ret = ak8963_get_mag_raw(bytes);
   if (ret != ESP_OK)
@@ -148,7 +150,7 @@ esp_err_t ak8963_get_mag_raw(uint8_t bytes[6])
   // be fresh.  The setTimeout ensures this read goes to the back of the queue, once all other
   // computation is done.
   vTaskDelay(1 / portTICK_RATE_MS);
-  uint8_t b;
+  uint8_t b = 0;
   i2c_read_byte(i2c_num, AK8963_ADDRESS, AK8963_ST2, &b);
 
   return ESP_OK;
@@ -184,10 +186,10 @@ void ak8963_print_settings(void)
                         "0x0F Invalid mode",
                         "0x0F (Fuse ROM access mode)"};
 
-  uint8_t device_id;
+  uint8_t device_id = 0;
   ESP_ERROR_CHECK(ak8963_get_device_id(&device_id));
 
-  uint8_t cntl;
+  uint8_t cntl = 0;
   ESP_ERROR_CHECK(ak8963_get_cntl(&cntl));
 
   ESP_LOGI(TAG, "Magnetometer (Compass):");

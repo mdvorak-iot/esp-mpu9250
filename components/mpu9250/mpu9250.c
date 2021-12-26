@@ -89,7 +89,7 @@ esp_err_t set_clock_source(uint8_t adrs)
 
 esp_err_t get_clock_source(uint8_t *clock_source)
 {
-  uint8_t byte;
+  uint8_t byte = 0;
   esp_err_t ret = i2c_read_byte(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_RA_PWR_MGMT_1, &byte);
   if (ret != ESP_OK)
   {
@@ -155,7 +155,7 @@ esp_err_t set_sleep_enabled(bool state)
 
 esp_err_t get_sleep_enabled(bool *state)
 {
-  uint8_t bit;
+  uint8_t bit = 0;
   esp_err_t ret = i2c_read_bit(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_RA_PWR_MGMT_1, MPU9250_PWR1_SLEEP_BIT, &bit);
   if (ret != ESP_OK)
   {
@@ -192,8 +192,8 @@ void align_accel(uint8_t bytes[6], vector_t *v)
 esp_err_t get_accel(vector_t *v)
 {
 
-  esp_err_t ret;
-  uint8_t bytes[6];
+  esp_err_t ret = ESP_OK;
+  uint8_t bytes[6] = {};
 
   ret = i2c_read_bytes(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_ACCEL_XOUT_H, bytes, 6);
   if (ret != ESP_OK)
@@ -219,8 +219,8 @@ void align_gryo(uint8_t bytes[6], vector_t *v)
 
 esp_err_t get_gyro(vector_t *v)
 {
-  esp_err_t ret;
-  uint8_t bytes[6];
+  esp_err_t ret = ESP_OK;
+  uint8_t bytes[6] = {};
   ret = i2c_read_bytes(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_GYRO_XOUT_H, bytes, 6);
   if (ret != ESP_OK)
   {
@@ -234,8 +234,8 @@ esp_err_t get_gyro(vector_t *v)
 
 esp_err_t get_accel_gyro(vector_t *va, vector_t *vg)
 {
-  esp_err_t ret;
-  uint8_t bytes[14];
+  esp_err_t ret = ESP_OK;
+  uint8_t bytes[14] = {};
   ret = i2c_read_bytes(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_ACCEL_XOUT_H, bytes, 14);
   if (ret != ESP_OK)
   {
@@ -255,7 +255,7 @@ esp_err_t get_accel_gyro(vector_t *va, vector_t *vg)
 
 esp_err_t get_accel_gyro_mag(vector_t *va, vector_t *vg, vector_t *vm)
 {
-  esp_err_t ret;
+  esp_err_t ret = ESP_OK;
   ret = get_accel_gyro(va, vg);
   if (ret != ESP_OK)
   {
@@ -282,7 +282,7 @@ esp_err_t get_device_id(uint8_t *val)
 
 esp_err_t get_temperature_raw(uint16_t *val)
 {
-  uint8_t bytes[2];
+  uint8_t bytes[2] = {};
   esp_err_t ret = i2c_read_bytes(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_TEMP_OUT_H, bytes, 2);
   if (ret != ESP_OK)
   {
@@ -294,7 +294,7 @@ esp_err_t get_temperature_raw(uint16_t *val)
 
 esp_err_t get_temperature_celsius(float *val)
 {
-  uint16_t raw_temp;
+  uint16_t raw_temp = 0;
   esp_err_t ret = get_temperature_raw(&raw_temp);
   if (ret != ESP_OK)
   {
@@ -315,7 +315,7 @@ static esp_err_t enable_magnetometer(void)
   ESP_ERROR_CHECK(set_bypass_enabled(true));
   vTaskDelay(100 / portTICK_RATE_MS);
 
-  bool is_enabled;
+  bool is_enabled = false;
   ESP_ERROR_CHECK(get_bypass_enabled(&is_enabled));
   if (is_enabled)
   {
@@ -332,7 +332,7 @@ static esp_err_t enable_magnetometer(void)
 
 esp_err_t get_bypass_enabled(bool *state)
 {
-  uint8_t bit;
+  uint8_t bit = 0;
   esp_err_t ret = i2c_read_bit(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_BYPASS_EN_BIT, &bit);
   if (ret != ESP_OK)
   {
@@ -350,7 +350,7 @@ esp_err_t set_bypass_enabled(bool state)
 
 esp_err_t get_i2c_master_mode(bool *state)
 {
-  uint8_t bit;
+  uint8_t bit = 0;
   esp_err_t ret = i2c_read_bit(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_I2C_MST_EN_BIT, &bit);
   if (ret != ESP_OK)
   {
@@ -371,7 +371,7 @@ esp_err_t set_i2c_master_mode(bool state)
  */
 esp_err_t get_gyro_power_settings(uint8_t bytes[3])
 {
-  uint8_t byte;
+  uint8_t byte = 0;
   esp_err_t ret = i2c_read_byte(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_RA_PWR_MGMT_2, &byte);
   if (ret != ESP_OK)
   {
@@ -392,7 +392,7 @@ esp_err_t get_gyro_power_settings(uint8_t bytes[3])
  */
 esp_err_t get_accel_power_settings(uint8_t bytes[3])
 {
-  uint8_t byte;
+  uint8_t byte = 0;
   esp_err_t ret = i2c_read_byte(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_RA_PWR_MGMT_2, &byte);
   if (ret != ESP_OK)
   {
@@ -413,7 +413,7 @@ esp_err_t get_accel_power_settings(uint8_t bytes[3])
  */
 esp_err_t get_full_scale_accel_range(uint8_t *full_scale_accel_range)
 {
-  uint8_t byte;
+  uint8_t byte = 0;
   esp_err_t ret = i2c_read_byte(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_RA_ACCEL_CONFIG_1, &byte);
   if (ret != ESP_OK)
   {
@@ -433,7 +433,7 @@ esp_err_t get_full_scale_accel_range(uint8_t *full_scale_accel_range)
  */
 esp_err_t get_full_scale_gyro_range(uint8_t *full_scale_gyro_range)
 {
-  uint8_t byte;
+  uint8_t byte = 0;
   esp_err_t ret = i2c_read_byte(I2C_MASTER_NUM, MPU9250_I2C_ADDR, MPU9250_RA_GYRO_CONFIG, &byte);
   if (ret != ESP_OK)
   {
@@ -462,25 +462,25 @@ void mpu9250_print_settings(void)
       "6 (Internal 20MHz oscillator)",
       "7 (Stops the clock and keeps timing generator in reset)"};
 
-  uint8_t device_id;
+  uint8_t device_id = 0;
   ESP_ERROR_CHECK(get_device_id(&device_id));
 
-  bool bypass_enabled;
+  bool bypass_enabled = false;
   ESP_ERROR_CHECK(get_bypass_enabled(&bypass_enabled));
 
-  bool sleep_enabled;
+  bool sleep_enabled = false;
   ESP_ERROR_CHECK(get_sleep_enabled(&sleep_enabled));
 
-  bool i2c_master_mode;
+  bool i2c_master_mode = false;
   ESP_ERROR_CHECK(get_i2c_master_mode(&i2c_master_mode));
 
-  uint8_t clock_source;
+  uint8_t clock_source = 0;
   ESP_ERROR_CHECK(get_clock_source(&clock_source));
 
-  uint8_t accel_power_settings[3];
+  uint8_t accel_power_settings[3] = {};
   ESP_ERROR_CHECK(get_accel_power_settings(accel_power_settings));
 
-  uint8_t gyro_power_settings[3];
+  uint8_t gyro_power_settings[3] = {};
   ESP_ERROR_CHECK(get_gyro_power_settings(gyro_power_settings));
 
   ESP_LOGI(TAG, "MPU9250:");
@@ -507,7 +507,7 @@ void print_accel_settings(void)
 {
   const char *FS_RANGE[] = {"±2g (0)", "±4g (1)", "±8g (2)", "±16g (3)"};
 
-  uint8_t full_scale_accel_range;
+  uint8_t full_scale_accel_range = 0;
   ESP_ERROR_CHECK(get_full_scale_accel_range(&full_scale_accel_range));
 
   ESP_LOGI(TAG, "Accelerometer:");
@@ -532,7 +532,7 @@ void print_gyro_settings(void)
       "+1000 dps (2)",
       "+2000 dps (3)"};
 
-  uint8_t full_scale_gyro_range;
+  uint8_t full_scale_gyro_range = 0;
   ESP_ERROR_CHECK(get_full_scale_gyro_range(&full_scale_gyro_range));
 
   ESP_LOGI(TAG, "Gyroscope:");

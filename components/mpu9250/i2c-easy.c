@@ -62,7 +62,7 @@ esp_err_t i2c_master_init(uint8_t i2c_num, uint8_t gpio_sda, uint8_t gpio_scl)
 
 esp_err_t i2c_write_bytes(i2c_port_t i2c_num, uint8_t periph_address, uint8_t reg_address, uint8_t *data, size_t data_len)
 {
-  int ret;
+  int ret = 0;
   i2c_cmd_handle_t cmd = i2c_cmd_link_create();
   i2c_master_start(cmd);
   i2c_master_write_byte(cmd, periph_address << 1 | WRITE_BIT, ACK_CHECK_EN);
@@ -82,7 +82,7 @@ esp_err_t i2c_write_byte(i2c_port_t i2c_num, uint8_t periph_address, uint8_t reg
 
 esp_err_t i2c_read_bytes(i2c_port_t i2c_num, uint8_t periph_address, uint8_t reg_address, uint8_t *data, size_t data_len)
 {
-  int ret;
+  int ret = 0;
   i2c_cmd_handle_t cmd = i2c_cmd_link_create();
   i2c_master_start(cmd);
   i2c_master_write_byte(cmd, periph_address << 1 | WRITE_BIT, ACK_CHECK_EN);
@@ -119,7 +119,7 @@ uint8_t get_bit_mask(uint8_t bit, uint8_t length)
 
 esp_err_t i2c_write_bits(i2c_port_t i2c_num, uint8_t periph_address, uint8_t reg_address, uint8_t bit, uint8_t length, uint8_t value)
 {
-  uint8_t data[1];
+  uint8_t data[1] = {};
 
   int ret = i2c_read_bytes(i2c_num, periph_address, reg_address, data, 1);
   if (ret != ESP_OK)
@@ -139,7 +139,7 @@ esp_err_t i2c_write_bit(i2c_port_t i2c_num, uint8_t periph_address, uint8_t reg_
 
 esp_err_t i2c_read_bit(i2c_port_t i2c_num, uint8_t periph_address, uint8_t reg_address, uint8_t bit, uint8_t *result)
 {
-  uint8_t data[1];
+  uint8_t data[1] = {};
 
   int ret = i2c_read_byte(i2c_num, periph_address, reg_address, data);
   if (ret != ESP_OK)
