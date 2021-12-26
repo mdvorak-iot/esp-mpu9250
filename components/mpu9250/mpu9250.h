@@ -31,6 +31,16 @@
 //   https://www.invensense.com/wp-content/uploads/2015/02/MPU-9250-Datasheet.pdf
 //   https://www.invensense.com/wp-content/uploads/2015/02/MPU-9250-Register-Map.pdf
 
+#ifndef MPU9250_I2C_MASTER_NUM
+#define MPU9250_I2C_MASTER_NUM (CONFIG_MPU9250_I2C_MASTER_NUM)
+#endif
+#ifndef MPU9250_I2C_MASTER_SCL_IO
+#define MPU9250_I2C_MASTER_SCL_IO (CONFIG_MPU9250_I2C_MASTER_SCL_IO)
+#endif
+#ifndef MPU9250_I2C_MASTER_SDA_IO
+#define MPU9250_I2C_MASTER_SDA_IO (CONFIG_MPU9250_I2C_MASTER_SDA_IO)
+#endif
+
 #define MPU9250_I2C_ADDRESS_AD0_LOW (0x68)
 #define MPU9250_I2C_ADDR MPU9250_I2C_ADDRESS_AD0_LOW
 #define MPU9250_I2C_ADDRESS_AD0_HIGH (0x69)
