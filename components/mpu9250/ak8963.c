@@ -26,9 +26,7 @@
 static const char *TAG = "ak8963";
 
 static bool initialised = false;
-static uint8_t i2c_num;
-calibration_t *cal;
-vector_t asa;
+static calibration_t *cal = NULL;
 
 esp_err_t ak8963_init(i2c_port_t i2c_number, calibration_t *c)
 {
