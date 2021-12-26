@@ -27,6 +27,10 @@
 #include "esp_err.h"
 #include "driver/i2c.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 esp_err_t i2c_master_init(uint8_t i2c_num, uint8_t gpio_sda, uint8_t gpio_scl);
 
 /**
@@ -79,5 +83,9 @@ esp_err_t i2c_write_bit(i2c_port_t i2c_num, uint8_t periph_address, uint8_t reg_
  * @param  result   The place where the result is stored.
  */
 esp_err_t i2c_read_bit(i2c_port_t i2c_num, uint8_t periph_address, uint8_t reg_address, uint8_t bit, uint8_t *result);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __I2C_EASY_H

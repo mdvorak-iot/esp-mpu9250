@@ -31,6 +31,10 @@
 //   https://www.invensense.com/wp-content/uploads/2015/02/MPU-9250-Datasheet.pdf
 //   https://www.invensense.com/wp-content/uploads/2015/02/MPU-9250-Register-Map.pdf
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef MPU9250_I2C_MASTER_NUM
 #define MPU9250_I2C_MASTER_NUM (CONFIG_MPU9250_I2C_MASTER_NUM)
 #endif
@@ -178,5 +182,9 @@ esp_err_t get_accel_gyro_mag(vector_t *va, vector_t *vg, vector_t *vm);
 esp_err_t get_mag_raw(uint8_t bytes[6]);
 
 void print_settings(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __MPU9250_H

@@ -19,8 +19,16 @@
 #ifndef __CALIBRATE_H
 #define __CALIBRATE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void calibrate_gyro(void);
 void calibrate_accel(void);
 void calibrate_mag(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

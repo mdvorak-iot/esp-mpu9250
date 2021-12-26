@@ -22,6 +22,10 @@
 #include "freertos/FreeRTOS.h"
 #include "driver/i2c.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define AK8963_ADDRESS (0x0c)
 #define AK8963_WHO_AM_I (0x00) // should return 0x48
 #define AK8963_WHO_AM_I_RESPONSE (0x48)
@@ -99,5 +103,9 @@ esp_err_t ak8963_get_cntl(uint8_t *mode);
 esp_err_t ak8963_set_cntl(uint8_t mode);
 
 void ak8963_print_settings(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

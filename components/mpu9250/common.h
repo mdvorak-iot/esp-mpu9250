@@ -19,9 +19,17 @@
 #ifndef __COMMON_H
 #define __COMMON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define SAMPLE_FREQ_Hz (CONFIG_SAMPLE_RATE_Hz)
 #define SAMPLE_INTERVAL_MS (1000 / SAMPLE_FREQ_Hz) // Sample Rate in milliseconds
 
 void pause(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
