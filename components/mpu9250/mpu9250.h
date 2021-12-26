@@ -21,6 +21,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "driver/i2c.h"
+#include <math.h>
 
 /*****************/
 /** MPU9250 MAP **/
@@ -121,6 +122,8 @@
 
 #define BYTE_2_INT_BE(byte, i) ((int16_t)((byte[i] << 8) + (byte[i + 1])))
 #define BYTE_2_INT_LE(byte, i) ((int16_t)((byte[i + 1] << 8) + (byte[i])))
+
+#define DEG2RAD(deg) (deg * M_PI / 180.0f)
 
 typedef struct
 {

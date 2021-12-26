@@ -24,8 +24,6 @@
 #define SAMPLE_FREQ_Hz (CONFIG_SAMPLE_RATE_Hz)
 #define SAMPLE_INTERVAL_MS (1000 / SAMPLE_FREQ_Hz) // Sample Rate in milliseconds
 
-#define DEG2RAD(deg) (deg * M_PI / 180.0f)
-
 void pause(void);
 
 #endif
