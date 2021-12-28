@@ -83,9 +83,9 @@ void calibrate_gyro(void)
   wait();
 
   vector_t vg_sum;
-  vg_sum.x = 0.0;
-  vg_sum.y = 0.0;
-  vg_sum.z = 0.0;
+  vg_sum.x = 0;
+  vg_sum.y = 0;
+  vg_sum.z = 0;
   for (int i = 0; i < NUM_GYRO_READS; i += 1)
   {
 
@@ -126,7 +126,7 @@ void calibrate_gyro(void)
  * this calibration process outputs those values.
  */
 
-#define NUM_ACCEL_READS (1000.0)
+#define NUM_ACCEL_READS (1000)
 
 #define X_AXIS (0)
 #define Y_AXIS (1)
@@ -144,7 +144,7 @@ vector_t scale_lo = {.x = 0, .y = 0, .z = 0};
 vector_t scale_hi = {.x = 0, .y = 0, .z = 0};
 
 /**
- * This will syncronuously read the accel data from MPU9250.  It will gather the offset and scalar values.
+ * This will synchronously read the accel data from MPU9250.  It will gather the offset and scalar values.
  */
 void calibrate_accel_axis(int axis, int dir)
 {
@@ -234,9 +234,9 @@ void calibrate_accel(void)
   run_next_capture(Z_AXIS, DIR_UP);
   run_next_capture(Z_AXIS, DIR_DOWN);
 
-  offset.x /= (NUM_ACCEL_READS * 4.0);
-  offset.y /= (NUM_ACCEL_READS * 4.0);
-  offset.z /= (NUM_ACCEL_READS * 4.0);
+  offset.x /= (NUM_ACCEL_READS * 4.0f);
+  offset.y /= (NUM_ACCEL_READS * 4.0f);
+  offset.z /= (NUM_ACCEL_READS * 4.0f);
   scale_lo.x /= NUM_ACCEL_READS;
   scale_lo.y /= NUM_ACCEL_READS;
   scale_lo.z /= NUM_ACCEL_READS;
@@ -262,8 +262,8 @@ void calibrate_accel(void)
  * http://www.camelsoftware.com/2016/03/13/imu-maths-calculate-orientation-pt3/
  */
 
-#define MIN(a, b) (a < b ? a : b)
-#define MAX(a, b) (a > b ? a : b)
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 void calibrate_mag(void)
 {
@@ -281,7 +281,7 @@ void calibrate_mag(void)
 
   init_imu();
 
-  ESP_LOGW(TAG, "Rotate the magnometer around all 3 axes, until the min and max values don't change anymore.");
+  ESP_LOGW(TAG, "Rotate the magnetometer around all 3 axes, until the min and max values don't change anymore.");
 
   printf("    x        y        z      min x     min y     min z     max x     max y     max z\n");
   for (int i = 0; i < NUM_MAG_READS; i += 1)
@@ -301,10 +301,10 @@ void calibrate_mag(void)
   }
 
   vector_t v_avg = {
-      .x = (v_max.x - v_min.x) / 2.0,
-      .y = (v_max.y - v_min.y) / 2.0,
-      .z = (v_max.z - v_min.z) / 2.0};
-  float avg_radius = (v_avg.x + v_avg.y + v_avg.z) / 3.0;
+      .x = (v_max.x - v_min.x) / 2.0f,
+      .y = (v_max.y - v_min.y) / 2.0f,
+      .z = (v_max.z - v_min.z) / 2.0f};
+  float avg_radius = (v_avg.x + v_avg.y + v_avg.z) / 3.0f;
   vector_t v_scale = {
       .x = avg_radius / v_avg.x,
       .y = avg_radius / v_avg.y,
