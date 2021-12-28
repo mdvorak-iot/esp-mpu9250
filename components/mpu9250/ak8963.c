@@ -109,9 +109,9 @@ esp_err_t ak8963_get_sensitivity_adjustment_values()
     return ret;
 
   // Get the ASA* values
-  asa.x = (((float)xi - 128.0) * 0.5) / 128.0 + 1.0;
-  asa.y = (((float)yi - 128.0) * 0.5) / 128.0 + 1.0;
-  asa.z = (((float)zi - 128.0) * 0.5) / 128.0 + 1.0;
+  asa.x = (((float)xi - 128.0f) * 0.5f) / 128.0f + 1.0f;
+  asa.y = (((float)yi - 128.0f) * 0.5f) / 128.0f + 1.0f;
+  asa.z = (((float)zi - 128.0f) * 0.5f) / 128.0f + 1.0f;
 
   return ak8963_set_cntl(current_mode);
 }
