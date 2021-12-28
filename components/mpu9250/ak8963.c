@@ -193,7 +193,7 @@ void ak8963_print_settings(void)
   ESP_ERROR_CHECK(ak8963_get_cntl(&cntl));
 
   ESP_LOGI(TAG, "Magnetometer (Compass):");
-  ESP_LOGI(TAG, "--> i2c address: 0x%02d", i2c_num);
+  ESP_LOGI(TAG, "--> i2c bus: 0x%02d", i2c_num);
   ESP_LOGI(TAG, "--> initialised: %s", initialised ? "true" : "false");
   ESP_LOGI(TAG, "--> Device ID: 0x%02x", device_id);
   ESP_LOGI(TAG, "--> Mode: %s", cntl_modes[cntl]);
