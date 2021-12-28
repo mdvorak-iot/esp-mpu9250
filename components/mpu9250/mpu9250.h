@@ -19,8 +19,8 @@
 #ifndef __MPU9250_H
 #define __MPU9250_H
 
-#include "freertos/FreeRTOS.h"
 #include "driver/i2c.h"
+#include "freertos/FreeRTOS.h"
 #include <math.h>
 
 /*****************/
@@ -137,28 +137,40 @@ extern "C" {
 #define BYTE_2_INT_BE(byte, i) ((int16_t)((byte[i] << 8) + (byte[i + 1])))
 #define BYTE_2_INT_LE(byte, i) ((int16_t)((byte[i + 1] << 8) + (byte[i])))
 
-#define DEG2RAD(deg) (deg * M_PI / 180.0f)
+#define DEG2RAD(deg) ((deg) * M_PI / 180.0f)
 
 typedef struct
 {
-  float x, y, z;
+    float x, y, z;
 } vector_t;
 
 typedef struct
 {
-  // Magnetometer
-  vector_t mag_offset;
-  vector_t mag_scale;
+    // Magnetometer
+    vector_t mag_offset;
+    vector_t mag_scale;
 
-  // Gryoscope
-  vector_t gyro_bias_offset;
+    // Gryoscope
+    vector_t gyro_bias_offset;
 
-  // Accelerometer
-  vector_t accel_offset;
-  vector_t accel_scale_lo;
-  vector_t accel_scale_hi;
+    // Accelerometer
+    vector_t accel_offset;
+    vector_t accel_scale_lo;
+    vector_t accel_scale_hi;
 
 } calibration_t;
+
+#define CALIBRATION_DEFAULTS()                               \
+    {                                                        \
+        .mag_offset = {.x = 0.0, .y = 0.0, .z = 0.0},        \
+        .mag_scale = {.x = 1.0, .y = 1.0, .z = 1.0},         \
+        .accel_offset = {.x = 0.0, .y = 0.0, .z = 0.0},      \
+        .accel_scale_lo = {.x = -1.0, .y = -1.0, .z = -1.0}, \
+        .accel_scale_hi = {.x = 1.0, .y = 1.0, .z = 1.0},    \
+        .gyro_bias_offset = {.x = 0.0,                       \
+                             .y = 0.0,                       \
+                             .z = 0.0 }                      \
+    }
 
 esp_err_t i2c_mpu9250_init(calibration_t *cal);
 esp_err_t set_clock_source(uint8_t adrs);

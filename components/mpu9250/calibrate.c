@@ -31,13 +31,7 @@
 const char *TAG = "calibrate";
 
 // Default calibration is to have none.
-static calibration_t cal = {
-    .mag_offset = {.x = 0.0, .y = 0.0, .z = 0.0},
-    .mag_scale = {.x = 1.0, .y = 1.0, .z = 1.0},
-    .accel_offset = {.x = 0.0, .y = 0.0, .z = 0.0},
-    .accel_scale_lo = {.x = -1.0, .y = -1.0, .z = -1.0},
-    .accel_scale_hi = {.x = 1.0, .y = 1.0, .z = 1.0},
-    .gyro_bias_offset = {.x = 0.0, .y = 0.0, .z = 0.0}};
+static calibration_t cal = CALIBRATION_DEFAULTS();
 
 void wait(void)
 {
